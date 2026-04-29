@@ -1,0 +1,10 @@
+R_DEF: Internal format may change without notice
+local
+drawable ic_generic_health
+drawable ic_heart
+drawable ic_launcher_foreground
+drawable ic_steps
+string app_name
+string permissions_description
+string permissions_title
+style Theme.DeviceDefault

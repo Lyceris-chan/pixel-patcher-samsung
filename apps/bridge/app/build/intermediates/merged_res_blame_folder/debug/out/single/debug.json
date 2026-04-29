@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "com.pixelbridge.complications.app-merged_res-32:/drawable_ic_generic_health.xml.flat",
+        "source": "com.pixelbridge.complications.app-main-34:/drawable/ic_generic_health.xml"
+    },
+    {
+        "merged": "com.pixelbridge.complications.app-merged_res-32:/drawable_ic_heart.xml.flat",
+        "source": "com.pixelbridge.complications.app-main-34:/drawable/ic_heart.xml"
+    },
+    {
+        "merged": "com.pixelbridge.complications.app-merged_res-32:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.pixelbridge.complications.app-main-34:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.pixelbridge.complications.app-merged_res-32:/drawable_ic_steps.xml.flat",
+        "source": "com.pixelbridge.complications.app-main-34:/drawable/ic_steps.xml"
+    }
+]

@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.pixelbridge.complications.app-mergeDebugResources-30:/values-sw360dp-v13/values-sw360dp-v13.xml",
+            "map": [
+                {
+                    "source": "/home/codespace/.gradle/caches/transforms-3/2b4501857393f14394b15f143f0986ef/transformed/preference-1.1.0/res/values-sw360dp-v13/values-sw360dp-v13.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "71",
+                        "endOffsets": "122"
+                    }
+                }
+            ]
+        }
+    ]
+}

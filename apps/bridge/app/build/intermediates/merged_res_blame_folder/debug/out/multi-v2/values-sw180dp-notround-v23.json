@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.pixelbridge.complications.app-mergeDebugResources-30:/values-sw180dp-notround-v23/values-sw180dp-notround-v23.xml",
+            "map": [
+                {
+                    "source": "/home/codespace/.gradle/caches/transforms-3/ecf8d7f53ba6cef46f624541a5d2eb6a/transformed/wear-1.3.0/res/values-sw180dp-notround-v23/values-sw180dp-notround-v23.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "55,123,188,259,322,385",
+                        "endColumns": "67,64,70,62,62,64",
+                        "endOffsets": "118,183,254,317,380,445"
+                    }
+                }
+            ]
+        }
+    ]
+}

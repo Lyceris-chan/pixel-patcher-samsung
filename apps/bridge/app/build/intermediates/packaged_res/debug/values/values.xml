@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pixel Bridge</string>
+    <string name="permissions_description">Pixel Bridge needs access to sensors and health data to provide complications for your watch face.</string>
+    <string name="permissions_title">Pixel Bridge Permissions</string>
+    <style name="Theme.DeviceDefault" parent="@android:style/Theme.DeviceDefault"/>
+</resources>
