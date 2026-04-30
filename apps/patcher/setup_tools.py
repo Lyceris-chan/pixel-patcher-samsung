@@ -28,7 +28,7 @@ PLATFORM_TOOLS = {
     'Linux': {
         'jre': {
             'url': 'https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.10%2B7/OpenJDK17U-jre_x64_linux_hotspot_17.0.10_7.tar.gz',
-            'sha256': '64f8c1676944e40510e36754507aa788a52e796ee4e60d2c2c132a217c36d244',
+            'sha256': '620cc0e7338f2722f3ed076ac65c0fafb575981426bac4e1970860e5e2d048f0',
             'format': 'tar.gz',
             'dest': 'jre'
         },
@@ -37,10 +37,11 @@ PLATFORM_TOOLS = {
             'format': 'zip',
             'dest': 'platform-tools'
         },
-        '7za': {
-            'url': 'https://unpkg.com/7zip-bin@5.2.0/linux/x64/7za',
-            'sha256': 'afc9448bd0cc2eeda131cce313ef4994f9656417e0a15c8465fcda9ca859b280',
-            'executable': True
+        '7z': {
+            'url': 'https://github.com/ip7z/7zip/releases/download/26.01/7z2601-linux-x64.tar.xz',
+            'sha256': '8ea0fc8a135e7b848e80a4116fe22dff56c8c4518dde1f43cce67f4e340b437a',
+            'format': 'tar.xz',
+            'dest': '7z'
         }
     },
     'Windows': {
@@ -85,11 +86,11 @@ PLATFORM_TOOLS = {
 GENERIC_TOOLS = {
     'apktool.jar': {
         'url': 'https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_3.0.2.jar',
-        'sha256': '7956eb04194300ce0d0a84ad18771eebc94b89fb8d1ddcce8ea4c056818646f4',
+        'sha256': 'eee4669a704a14e0623407e6701b0b91887e61e1e4049cb7a82833e14ae8b5fd',
     },
     'uber-apk-signer.jar': {
         'url': 'https://github.com/patrickfav/uber-apk-signer/releases/download/v1.3.0/uber-apk-signer-1.3.0.jar',
-        'sha256': '95539db827fe5b236b8f9f4efb89fa971fd5243814e7c218987c54341c72a786',
+        'sha256': 'e1299fd6fcf4da527dd53735b56127e8ea922a321128123b9c32d619bba1d835',
     }
 }
 

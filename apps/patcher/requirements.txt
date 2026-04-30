@@ -1,3 +1,2 @@
-# No external Python dependencies required.
-# All tools (ADB, JRE, etc.) are provided as portable binaries
-# and managed automatically by the toolkit setup.
+# External Python dependencies required for CLI interfaces
+questionary>=2.0.1

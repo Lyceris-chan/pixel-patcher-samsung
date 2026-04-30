@@ -83,24 +83,15 @@ def check_setup():
 
 
 def get_apk_info(apk_path: str) -> Optional[dict]:
-    import re
-    tmp = Path(CONF.get('work_dir', 'wf_work')) / "info_tmp"
-    if tmp.exists(): shutil.rmtree(tmp)
-    cmd = [JAVA, "-jar", CONF['apktool'], "d", "-f", "-s", "--no-res", "-o", str(tmp), apk_path]
-    try:
-        subprocess.run(cmd, capture_output=True, timeout=30)
-        yml = tmp / "apktool.yml"
-        if yml.exists():
-            c = yml.read_text()
-            pkg = re.search(r'packageName: (.*)', c)
-            ver = re.search(r'versionName: (.*)', c)
-            return {
-                'package': pkg.group(1).strip() if pkg else "unknown",
-                'version': ver.group(1).strip() if ver else "unknown",
-                'label': os.path.basename(apk_path).replace('.apk', '')
-            }
-    except: pass
-    return None
+    # Extracting info via apktool is too slow for thousands of APKs.
+    # Fallback to basic info based on filename to speed up scanning.
+    label = os.path.basename(apk_path).replace('.apk', '')
+    return {
+        'package': "unknown",
+        'version': "unknown",
+        'label': label,
+        'visible': True
+    }
 
 
 def parse_range(s: str) -> List[int]:
@@ -143,16 +134,15 @@ def menu_wizard():
             process_factory_image(zip_p)
 
     # Debloat
-    if input("\nRun Debloater? (y/n): ").lower() == 'y':
+    print(f"\n{Colors.WARNING}WARNING: Debloating may cause instability or break certain watch features.{Colors.ENDC}")
+    if input("Run Debloater? (y/n): ").lower() == 'y':
         from debloat import DebloatEngine
         engine = DebloatEngine(ADB)
         engine.run_migration_fixup()
-        # simplified interactive
-        pkg = input("Enter package to cage (or press Enter to skip): ").strip()
-        if pkg: engine.cage_package(pkg)
 
     # System Tweaks
-    if input("\nApply System Tweaks (Power & UI)? (y/n): ").lower() == 'y':
+    print(f"\n{Colors.WARNING}WARNING: System Tweaks modify core power and UI settings, which may cause unexpected battery behavior.{Colors.ENDC}")
+    if input("Apply System Tweaks (Power & UI)? (y/n): ").lower() == 'y':
         from tweaks import SystemTweaks
         tweaks = SystemTweaks(ADB)
         tweaks.optimize_power_management()
@@ -160,7 +150,8 @@ def menu_wizard():
         tweaks.apply_fixes()
 
     # Font Integration
-    if input("\nPatch and inject Pixel Watch Font (Google Sans)? (y/n): ").lower() == 'y':
+    print(f"\n{Colors.WARNING}WARNING: Font patching modifies system overlays and could cause UI glitches or unreadable text.{Colors.ENDC}")
+    if input("Patch and inject Pixel Watch Font (Google Sans)? (y/n): ").lower() == 'y':
         from font_patcher import patch_font, setup_pixel_keyboard
         ttf_path = input("Path to TTF (e.g. Wear-GoogleSans-Regular.ttf): ").strip()
         if os.path.exists(ttf_path):
