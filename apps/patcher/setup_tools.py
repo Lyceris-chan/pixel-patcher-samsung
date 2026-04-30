@@ -145,8 +145,9 @@ def extract_archive(archive_path: Path, dest_dir: Path, archive_format: str):
         if archive_format == 'zip':
             with zipfile.ZipFile(archive_path, 'r') as zip_ref:
                 zip_ref.extractall(dest_dir)
-        elif archive_format == 'tar.gz':
-            with tarfile.open(archive_path, 'r:gz') as tar_ref:
+        elif archive_format in ('tar.gz', 'tar.xz'):
+            mode = 'r:gz' if archive_format == 'tar.gz' else 'r:xz'
+            with tarfile.open(archive_path, mode) as tar_ref:
                 tar_ref.extractall(dest_dir)
         print(f"[✓] Extracted to {dest_dir.name}")
         return True

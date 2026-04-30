@@ -40,6 +40,7 @@ class Colors:
     GREEN = '\033[92m'
     YELLOW = '\033[93m'
     RED = '\033[91m'
+    WARNING = '\033[93m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
 
@@ -47,7 +48,7 @@ class Colors:
 def print_header():
     print(f"\n{Colors.BOLD}{Colors.CYAN}{'=' * 70}{Colors.ENDC}")
     print(f"{Colors.BOLD}{Colors.CYAN}  Pixel Watch Toolkit for Samsung Galaxy Watch{Colors.ENDC}")
-    print(f"{Colors.BOLD}{Colors.CYAN}  Production Interoperability Suite - v2.1.0{Colors.ENDC}")
+    print(f"{Colors.BOLD}{Colors.CYAN}  Production Interoperability Suite - v3.0.0{Colors.ENDC}")
     print(f"{Colors.BOLD}{Colors.CYAN}{'=' * 70}{Colors.ENDC}")
 
 
