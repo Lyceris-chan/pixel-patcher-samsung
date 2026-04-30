@@ -1,51 +1,42 @@
 # Samsung Wear OS Font Toolkit
 
-A production-grade toolkit for packaging and installing custom `.ttf` fonts on Samsung Galaxy Watches (Watch 4, 5, 6, 7, and Ultra). 
+A production-grade toolkit for packaging and installing custom `.ttf` fonts on Samsung Galaxy Watches.
 
-This toolkit was reverse-engineered from zFont 3 to provide a clean, PC-based automation for Wear OS users without the need for complex companion apps.
+This toolkit was reverse-engineered from the zFont methodology to provide clean, PC-based automation for Wear OS users without the need for complex companion apps.
 
-## 🚀 The "Minimalist Install" Workflow (Recommended)
-On modern Wear OS (One UI Watch 4.x / 5.x / 6.x), the installation process is significantly more streamlined than on mobile devices. **No placeholder fonts or Cloud Restore tricks are required.**
+## 🚀 The Workflow
 
 1.  **Generate:** Package your `.ttf` into a spoofed APK using the patcher.
 2.  **Sideload:** Install the generated APK via ADB.
 3.  **Apply:** Go to **Settings > Display > Font style** on your watch.
-4.  **Result:** Your custom font will appear in the list with its chosen name. Note that in some sub-menus, it may still be referred to as "Samsung Sans" due to the spoofed package ID, but the visual rendering is 100% your custom font.
+4.  **Result:** Your custom font will gracefully appear in the list under the assigned name (e.g. "Google Sans"). Note that deeply nested sub-menus might reference "Samsung Sans" due to the spoofed package ID, but the visual rendering applies globally.
 
 ---
 
 ## 🛠️ Usage
 
-### Prerequisites
-- Python 3.x
-- Java JRE (for Apktool and Signing)
-- ADB (for installation)
+This toolkit is normally called by the main wizard, but can be invoked manually:
 
-### Command
 ```bash
 python3 samsung_font_patcher.py <input_font.ttf> <output_name.apk> "[Font Display Name]"
 ```
 
 **Example:**
 ```bash
-python3 samsung_font_patcher.py myfont.ttf my_custom_font.apk "Product Sans Bold"
+python3 samsung_font_patcher.py Wear-GoogleSans.ttf googlesans.apk "Google Sans"
 ```
 
 ---
 
 ## 🔍 Technical Details
-This toolkit works by spoofing the official `com.monotype.android.font.samsungsans` package. Samsung Wear OS treats this specific package ID as a "trusted" system-level font provider, allowing us to bypass standard font signature checks by simply using this package ID for our custom fonts.
+
+This toolkit seamlessly bypasses standard font signature checks by spoofing the official `com.monotype.android.font.samsungsans` package. Samsung Wear OS intrinsically trusts this package ID as a system-level font provider.
 
 ### Internal Mechanics
-- **Spoofing:** The patcher uses a decompressed Samsung Sans APK as a skeleton.
-- **Injection:** It replaces the internal `Samsungsans.ttf` with your custom file.
-- **Metadata Patching:** It surgicaly updates the `Samsungsans.xml` config and the app's `strings.xml` to reflect your custom font name in the system settings menu.
-- **Signing:** The final APK is zipalign-optimized and signed with a generic debug key, which is accepted by Wear OS for this specific package ID.
-
-## 📂 Toolkit Contents
-- `samsung_font_patcher.py`: The main automation script.
-- `samsung_sans_template/`: The extracted and cleaned template files.
-- `docs/`: (Optional) Detailed reverse engineering reports.
+- **Spoofing:** Uses a decompressed Samsung Sans APK as a skeleton.
+- **Injection:** Replaces the internal `Samsungsans.ttf` with your custom font binary.
+- **Metadata Patching:** Surgically updates the XML configurations (`Samsungsans.xml` and `strings.xml`) to project your custom font name into the system settings.
+- **Signing:** The final APK is zipalign-optimized and signed using an Uber-APK-Signer debug key, which is fully trusted by Wear OS for this spoofed package.
 
 ---
-*Created for the Pixel Watch Toolkit Project.*
+*Developed for the Pixel Watch Toolkit Project.*

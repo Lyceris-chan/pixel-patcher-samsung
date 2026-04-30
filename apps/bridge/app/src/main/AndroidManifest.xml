@@ -42,8 +42,7 @@
 
         <service
             android:name=".HealthPassiveListenerService"
-            android:exported="true"
-            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" />
+            android:exported="true" />
 
         <!-- Real-time Heart Rate -->
         <service
@@ -75,7 +74,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT,RANGED_VALUE,GOAL_PROGRESS" />
+                android:value="SHORT_TEXT,RANGED_VALUE" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="0" />
@@ -84,6 +83,7 @@
         <!-- Daily Distance -->
         <service
             android:name=".DistanceComplicationService"
+            android:icon="@drawable/ic_generic_health"
             android:exported="true"
             android:label="Distance (Pixel Bridge)"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
@@ -92,7 +92,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT" />
+                android:value="SHORT_TEXT,RANGED_VALUE" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="0" />
@@ -101,6 +101,7 @@
         <!-- Daily Calories -->
         <service
             android:name=".CaloriesComplicationService"
+            android:icon="@drawable/ic_generic_health"
             android:exported="true"
             android:label="Calories (Pixel Bridge)"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
@@ -109,7 +110,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT" />
+                android:value="SHORT_TEXT,RANGED_VALUE" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="0" />
@@ -118,6 +119,7 @@
         <!-- Floors Climbed -->
         <service
             android:name=".FloorsComplicationService"
+            android:icon="@drawable/ic_generic_health"
             android:exported="true"
             android:label="Floors (Pixel Bridge)"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
@@ -126,7 +128,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT" />
+                android:value="SHORT_TEXT,RANGED_VALUE" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="0" />
@@ -135,6 +137,7 @@
         <!-- Blood Oxygen (SpO2) -->
         <service
             android:name=".SpO2ComplicationService"
+            android:icon="@drawable/ic_generic_health"
             android:exported="true"
             android:label="SpO2 (Pixel Bridge)"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
@@ -152,6 +155,7 @@
         <!-- Sleep Duration -->
         <service
             android:name=".SleepComplicationService"
+            android:icon="@drawable/ic_generic_health"
             android:exported="true"
             android:label="Sleep (Pixel Bridge)"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
@@ -160,7 +164,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT" />
+                android:value="SHORT_TEXT,RANGED_VALUE" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="0" />
@@ -169,6 +173,7 @@
         <!-- Active Minutes -->
         <service
             android:name=".ActiveMinutesComplicationService"
+            android:icon="@drawable/ic_generic_health"
             android:exported="true"
             android:label="Active Minutes (Pixel Bridge)"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
@@ -177,7 +182,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT" />
+                android:value="SHORT_TEXT,RANGED_VALUE" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="0" />
@@ -186,6 +191,7 @@
         <!-- Elevation -->
         <service
             android:name=".ElevationComplicationService"
+            android:icon="@drawable/ic_generic_health"
             android:exported="true"
             android:label="Elevation (Pixel Bridge)"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
@@ -194,7 +200,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT" />
+                android:value="SHORT_TEXT,RANGED_VALUE" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="0" />
@@ -203,6 +209,7 @@
         <!-- HRV -->
         <service
             android:name=".HRVComplicationService"
+            android:icon="@drawable/ic_generic_health"
             android:exported="true"
             android:label="HRV (Pixel Bridge)"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
@@ -211,7 +218,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT" />
+                android:value="SHORT_TEXT,RANGED_VALUE" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="0" />
@@ -220,6 +227,7 @@
         <!-- Respiratory Rate -->
         <service
             android:name=".RespiratoryRateComplicationService"
+            android:icon="@drawable/ic_generic_health"
             android:exported="true"
             android:label="Resp. Rate (Pixel Bridge)"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
@@ -228,7 +236,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="SHORT_TEXT" />
+                android:value="SHORT_TEXT,RANGED_VALUE" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="0" />

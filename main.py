@@ -115,7 +115,7 @@ def parse_range(s: str) -> List[int]:
 
 def push_sound(local: str, cat: str):
     name = os.path.basename(local)
-    m = {'ringtone': 'Ringtones', 'notification_sound': 'Notifications', 'alarm_alert': 'Alarms'}
+    m = {'ringtone': 'Ringtones', 'notification_sound': 'Notifications', 'alarm_alert': 'Alarms', 'low_battery_sound': 'Notifications', 'charging_sounds_file': 'Notifications'}
     rem = f"/sdcard/{m.get(cat, 'Notifications')}/{name}"
     print(f"Deploying {name}...")
     if run_adb_command(["push", local, rem])[0]:
@@ -125,7 +125,8 @@ def push_sound(local: str, cat: str):
             try:
                 mid = out.split("_id=")[1].split(",")[0].strip()
                 uri = f"content://media/external/audio/media/{mid}"
-                run_adb_command(["shell", "settings", "put", "system", cat, uri])
+                namespace = "global" if cat in ("charging_sounds_file", "low_battery_sound") else "system"
+                run_adb_command(["shell", "settings", "put", namespace, cat, uri])
                 print(f"{Colors.GREEN}Successfully set {name} as default {cat}{Colors.ENDC}")
             except: pass
 
@@ -205,7 +206,7 @@ def menu_wizard():
     sel_snds = []
     if snds:
         print(f"\nFound {len(snds)} system sounds.")
-        sc = input("1. Default sounds  2. Select individual  3. All  4. None: ").strip()
+        sc = input("1. Default sounds (incl. battery/charging)  2. Select individual  3. All  4. None: ").strip()
         if sc == '1': sel_snds = "DEFAULTS"
         elif sc == '2':
             snds.sort(key=lambda x: x.name)
@@ -330,14 +331,6 @@ def main():
             print("Turning off WiFi and Bluetooth. Connection will be lost.")
             run_adb_command(["shell", "nohup sh -c 'sleep 2 && svc wifi disable && svc bluetooth disable' > /dev/null 2>&1 &"])
             print(f"{Colors.GREEN}Commands dispatched. Disconnecting...{Colors.ENDC}")
-            sys.exit(0)
-        elif c == '8': break
-        input("\nPress Enter to return...")
-
-if __name__ == '__main__':
-    try: main()
-    except KeyboardInterrupt: sys.exit(0)
-          print(f"{Colors.GREEN}Commands dispatched. Disconnecting...{Colors.ENDC}")
             sys.exit(0)
         elif c == '8': break
         input("\nPress Enter to return...")

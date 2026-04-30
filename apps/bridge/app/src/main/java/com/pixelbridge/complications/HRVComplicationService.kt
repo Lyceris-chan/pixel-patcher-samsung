@@ -6,8 +6,13 @@ import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationType
 import androidx.wear.watchface.complications.data.PlainComplicationText
 import androidx.wear.watchface.complications.data.ShortTextComplicationData
+import androidx.wear.watchface.complications.data.GoalProgressComplicationData
+import androidx.wear.watchface.complications.data.RangedValueComplicationData
+import androidx.wear.watchface.complications.data.MonochromaticImage
+import android.graphics.drawable.Icon
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
+import com.pixelbridge.complications.R
 
 class HRVComplicationService : SuspendingComplicationDataSourceService() {
     private val healthDataManager by lazy { HealthDataManager(applicationContext) }
@@ -15,17 +20,68 @@ class HRVComplicationService : SuspendingComplicationDataSourceService() {
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? {
         Log.d("PixelBridge", "HRV requested")
         healthDataManager.registerPassiveListener()
+        
         val value = healthDataManager.getLatestDataByNames(listOf("HEART_RATE_VARIABILITY_RMSSD", "HRV_RMSSD"))
-        return ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(value).build(),
-            contentDescription = PlainComplicationText.Builder("HRV").build()
+        val textStr = ue.toString()
+        val numValue = textStr.replace(Regex("[^\d.]"), "").toFloatOrNull() ?: 0f
+        
+        val icon = MonochromaticImage.Builder(
+            Icon.createWithResource(this, R.drawable.ic_generic_health)
         ).build()
+        
+        val text = PlainComplicationText.Builder(textStr).build()
+        val desc = PlainComplicationText.Builder("HRV").build()
+
+        return when (request.complicationType) {
+            ComplicationType.RANGED_VALUE -> {
+                RangedValueComplicationData.Builder(
+                    value = numValue.coerceIn(0f, 150.0f),
+                    min = 0f,
+                    max = 150.0f,
+                    contentDescription = desc
+                )
+                .setText(text)
+                .setMonochromaticImage(icon)
+                .build()
+            }
+            else -> {
+                ShortTextComplicationData.Builder(
+                    text = text,
+                    contentDescription = desc
+                )
+                .setMonochromaticImage(icon)
+                .build()
+            }
+        }
     }
 
     override fun getPreviewData(type: ComplicationType): ComplicationData? {
-        return ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder("45ms").build(),
-            contentDescription = PlainComplicationText.Builder("HRV preview").build()
+        val icon = MonochromaticImage.Builder(
+            Icon.createWithResource(this, R.drawable.ic_generic_health)
         ).build()
+        val text = PlainComplicationText.Builder("60").build()
+        val desc = PlainComplicationText.Builder("HRV").build()
+
+        return when (type) {
+            ComplicationType.RANGED_VALUE -> {
+                RangedValueComplicationData.Builder(
+                    value = 60.0f.coerceIn(0f, 150.0f),
+                    min = 0f,
+                    max = 150.0f,
+                    contentDescription = desc
+                )
+                .setText(text)
+                .setMonochromaticImage(icon)
+                .build()
+            }
+            else -> {
+                ShortTextComplicationData.Builder(
+                    text = text,
+                    contentDescription = desc
+                )
+                .setMonochromaticImage(icon)
+                .build()
+            }
+        }
     }
 }

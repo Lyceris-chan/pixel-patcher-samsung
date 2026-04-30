@@ -1,0 +1,170 @@
+04-30 09:13:10.472 12575 12575 E AndroidRuntime: FATAL EXCEPTION: main
+04-30 09:13:10.472 12575 12575 E AndroidRuntime: java.lang.IllegalArgumentException: From T API onwards, value must be between min and max
+04-30 09:13:10.472 12575 12575 E AndroidRuntime: 	Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException: [StandaloneCoroutine{Cancelling}@397c971, Dispatchers.Main.immediate]
+04-30 16:42:11.116   605   672 W ProcessCpuTracker: Failed to stat(/proc/18161): android.system.ErrnoException: stat failed: ENOENT (No such file or directory)
+04-30 17:05:04.153   605   682 W ProcessCpuTracker: Failed to stat(/proc/18245): android.system.ErrnoException: stat failed: ENOENT (No such file or directory)
+04-30 18:28:48.653   605   823 W ProcessCpuTracker: Failed to stat(/proc/19283): android.system.ErrnoException: stat failed: ENOENT (No such file or directory)
+04-30 21:33:43.122   605   682 W ProcessCpuTracker: Failed to stat(/proc/20113): android.system.ErrnoException: stat failed: ENOENT (No such file or directory)
+04-30 21:34:28.088   605   682 W ProcessCpuTracker: Failed to stat(/proc/20120): android.system.ErrnoException: stat failed: ENOENT (No such file or directory)
+04-30 21:35:45.367   605   682 W ProcessCpuTracker: Failed to stat(/proc/20154): android.system.ErrnoException: stat failed: ENOENT (No such file or directory)
+04-30 21:38:26.019 20138 20138 E AndroidRuntime: FATAL EXCEPTION: main
+04-30 21:38:26.019 20138 20138 E AndroidRuntime: java.lang.IllegalArgumentException: From T API onwards, value must be between min and max
+04-30 21:38:26.019 20138 20138 E AndroidRuntime: 	Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException: [StandaloneCoroutine{Cancelling}@6537273, Dispatchers.Main.immediate]
+04-30 21:41:29.090   605   682 W ProcessCpuTracker: Failed to stat(/proc/20396): android.system.ErrnoException: stat failed: ENOENT (No such file or directory)
+04-30 21:45:48.102   605   682 W ProcessCpuTracker: Failed to stat(/proc/20426): android.system.ErrnoException: stat failed: ENOENT (No such file or directory)
+04-30 21:51:16.085   605   682 W ProcessCpuTracker: Failed to stat(/proc/20450): android.system.ErrnoException: stat failed: ENOENT (No such file or directory)
+04-30 21:57:20.013   605   823 W ProcessCpuTracker: Failed to stat(/proc/20485): android.system.ErrnoException: stat failed: ENOENT (No such file or directory)
+04-30 21:57:20.022   605   823 W ProcessCpuTracker: Failed to stat(/proc/20486): android.system.ErrnoException: stat failed: ENOENT (No such file or directory)
+04-30 21:59:45.028   605  1677 E HealthConnectAutoDelete: android.database.sqlite.SQLiteException: no such table: read_access_logs_table (code 1 SQLITE_ERROR[1]): , while compiling: DELETE FROM read_access_logs_table WHERE read_time >= 0 AND read_time < 1774900784986
+04-30 21:59:52.220   605   672 W BroadcastQueue: Failed to schedule BroadcastRecord{254b093 android.intent.action.BATTERY_CHANGED/u-1} to BroadcastFilter{80bec34 10014/u0 ReceiverList{4939307 20577 com.google.android.wearable.app/10014/u0 remote:4b71546}} via ProcessRecord{e5a8fc6 20577:com.google.android.wearable.app/u0a14}: android.os.DeadObjectException
+04-30 22:15:59.930   605 21151 E AdbDebuggingManager: Caught an exception opening the socket: java.io.IOException: Connection refused
+04-30 22:16:02.113 21159 21159 E AndroidRuntime: FATAL EXCEPTION: main
+04-30 22:16:02.113 21159 21159 E AndroidRuntime: java.lang.IllegalArgumentException: From T API onwards, value must be between min and max
+04-30 22:16:02.113 21159 21159 E AndroidRuntime: 	Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException: [StandaloneCoroutine{Cancelling}@90df2f5, Dispatchers.Main.immediate]
+04-30 22:17:26.662  1031 19420 E APPTRAY : [AppsInfoHelper$special$$inlined$CoroutineExceptionHandler$1] handleException(5) > AppsInfoHelper coroutine error
+04-30 22:17:26.662  1031 19420 W System.err: java.lang.ClassCastException: com.google.gson.internal.LinkedTreeMap cannot be cast to com.google.android.clockwork.sysui.common.sec.seclauncher.ui.featuredappdata.LaunchedCountWithDate
+04-30 22:18:32.276  1613  1873 E WCSExt[1.0]: [PackageEventHandler] dwf NameNotFoundException : null
+04-30 22:18:33.936 21455 21455 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+04-30 22:21:02.375   605   672 W ProcessCpuTracker: Failed to stat(/proc/21751): android.system.ErrnoException: stat failed: ENOENT (No such file or directory)
+04-30 22:21:07.580   605   899 W LocationManagerService: java.lang.IllegalArgumentException
+04-30 22:21:11.881  1031 19421 E APPTRAY : [AppsInfoHelper$special$$inlined$CoroutineExceptionHandler$1] handleException(5) > AppsInfoHelper coroutine error
+04-30 22:21:11.881  1031 19421 W System.err: java.lang.ClassCastException: com.google.gson.internal.LinkedTreeMap cannot be cast to com.google.android.clockwork.sysui.common.sec.seclauncher.ui.featuredappdata.LaunchedCountWithDate
+04-30 22:22:28.111   605   823 W ProcessCpuTracker: Failed to stat(/proc/21980): android.system.ErrnoException: stat failed: ENOENT (No such file or directory)
+04-30 22:31:06.647 20713 20722 E WCS     : java.lang.IllegalStateException: Preview data received for the passed provider:ComponentInfo{com.samsung.android.wear.shealth/com.samsung.android.wear.shealth.complications.stress.StressComplicationProviderService} and type :3 is null
+04-30 22:31:06.715  1049  1049 W WearServices: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:31:06.715  1049  1049 W WearServices: 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:31:06.715  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:31:06.715  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:31:06.734 20713 20722 E WCS     : 	Suppressed: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:31:06.734 20713 20722 E WCS     : 	Caused by: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:31:06.734 20713 20722 E WCS     : 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:31:06.734 20713 20722 E WCS     : 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:31:06.734 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:31:06.734 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:31:06.736  1049  1049 W WearServices: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:31:06.736  1049  1049 W WearServices: 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:31:06.736  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:31:06.736  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:31:06.739 20713 20722 E WCS     : 	Suppressed: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:31:06.739 20713 20722 E WCS     : 	Caused by: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:31:06.739 20713 20722 E WCS     : 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:31:06.739 20713 20722 E WCS     : 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:31:06.739 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:31:06.739 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:31:06.746  1049  1049 W WearServices: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:31:06.746  1049  1049 W WearServices: 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:31:06.746  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:31:06.746  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:31:06.748 20713 21031 E WCS     : 	Suppressed: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:31:06.748 20713 21031 E WCS     : 	Caused by: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:31:06.748 20713 21031 E WCS     : 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:31:06.748 20713 21031 E WCS     : 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:31:06.748 20713 21031 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:31:06.748 20713 21031 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:31:07.051  5329  5329 E Icon    : android.content.res.Resources$NotFoundException: Resource ID #0x0
+04-30 22:31:14.435  1049  1049 W WearServices: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:31:14.435  1049  1049 W WearServices: 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:31:14.435  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:31:14.435  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:31:14.438 20713 20721 E WCS     : 	Suppressed: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:31:14.438 20713 20721 E WCS     : 	Caused by: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:31:14.438 20713 20721 E WCS     : 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:31:14.438 20713 20721 E WCS     : 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:31:14.438 20713 20721 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:31:14.438 20713 20721 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:31:35.162  5329  5329 E RWF     : eje main [Reveal:134014462]Failed to invalidate resource : java.lang.IllegalArgumentException: View#clearCachedResource: illegal argument href = ''
+04-30 22:31:47.956  5329  5329 E RWF     : eje main [Reveal:149197044]Error unregistering eiz@849e152 : java.lang.IllegalArgumentException: Receiver not registered: eiz@849e152
+04-30 22:31:47.961  5329  5329 E BroadcastsReceiver: Exception occurred in BroadcastsReceiver.onDestroy
+04-30 22:31:47.961  5329  5329 E BroadcastsReceiver: java.lang.IllegalArgumentException: Receiver not registered: axe@a46d274
+04-30 22:31:47.964  5329  5329 E RWF     : eig main [Reveal:149197044]AmbientTransitionController unregister failed java.lang.IllegalArgumentException: Receiver not registered: dqn@6896428
+04-30 22:31:48.462 21189 21189 E HealthDataManager: java.lang.IllegalStateException: Service not available
+04-30 22:31:49.288 21189 21189 E AndroidRuntime: FATAL EXCEPTION: main
+04-30 22:31:49.288 21189 21189 E AndroidRuntime: java.lang.IllegalArgumentException: From T API onwards, value must be between min and max
+04-30 22:31:49.288 21189 21189 E AndroidRuntime: 	Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException: [StandaloneCoroutine{Cancelling}@73cb2f4, Dispatchers.Main.immediate]
+04-30 22:32:07.752  1031  1031 W InputMethodSessionWrapper: android.os.DeadObjectException
+04-30 22:32:23.858  1031  1031 W InputMethodSessionWrapper: android.os.DeadObjectException
+04-30 22:32:32.666  1031  1031 W InputMethodSessionWrapper: android.os.DeadObjectException
+04-30 22:32:52.540  1049  1049 W WearServices: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:32:52.540  1049  1049 W WearServices: 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:32:52.540  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:32:52.540  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:32:52.554  1049  1049 W WearServices: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:32:52.554  1049  1049 W WearServices: 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:32:52.554  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:32:52.554  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:32:52.555 20713 21031 E WCS     : 	Suppressed: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:32:52.555 20713 21031 E WCS     : 	Caused by: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:32:52.555 20713 21031 E WCS     : 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:32:52.555 20713 21031 E WCS     : 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:32:52.555 20713 21031 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:32:52.555 20713 21031 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:32:52.557 20713 20722 E WCS     : 	Suppressed: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:32:52.557 20713 20722 E WCS     : 	Caused by: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:32:52.557 20713 20722 E WCS     : 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:32:52.557 20713 20722 E WCS     : 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:32:52.557 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:32:52.557 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:32:52.593  1049  1049 W WearServices: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:32:52.593  1049  1049 W WearServices: 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:32:52.593  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:32:52.593  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:32:52.595 20713 20722 E WCS     : 	Suppressed: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:32:52.595 20713 20722 E WCS     : 	Caused by: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:32:52.595 20713 20722 E WCS     : 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:32:52.595 20713 20722 E WCS     : 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:32:52.595 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:32:52.595 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:32:52.864  5329  5329 E Icon    : android.content.res.Resources$NotFoundException: Resource ID #0x0
+04-30 22:33:08.747  5329  5329 E Icon    : android.content.res.Resources$NotFoundException: Resource ID #0x0
+04-30 22:33:09.230  5329  5329 E RWF     : eje main [Reveal:70288438]Error unregistering eiz@de64c2e : java.lang.IllegalArgumentException: Receiver not registered: eiz@de64c2e
+04-30 22:33:09.234  5329  5329 E BroadcastsReceiver: Exception occurred in BroadcastsReceiver.onDestroy
+04-30 22:33:09.234  5329  5329 E BroadcastsReceiver: java.lang.IllegalArgumentException: Receiver not registered: axe@d2b077e
+04-30 22:33:09.235  5329  5329 E RWF     : eig main [Reveal:70288438]AmbientTransitionController unregister failed java.lang.IllegalArgumentException: Receiver not registered: dqn@bf5798c
+04-30 22:33:22.995  1031  1031 W InputMethodSessionWrapper: android.os.DeadObjectException
+04-30 22:33:31.475  1049  1049 W WearServices: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:33:31.475  1049  1049 W WearServices: 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:33:31.475  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:33:31.475  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:33:31.482 20713 20722 E WCS     : 	Suppressed: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:33:31.482 20713 20722 E WCS     : 	Caused by: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:33:31.482 20713 20722 E WCS     : 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:33:31.482 20713 20722 E WCS     : 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:33:31.482 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:33:31.482 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:33:31.487  1049  1049 W WearServices: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:33:31.487  1049  1049 W WearServices: 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:33:31.487  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:33:31.487  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:33:31.490 20713 20722 E WCS     : 	Suppressed: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:33:31.490 20713 20722 E WCS     : 	Caused by: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:33:31.490 20713 20722 E WCS     : 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:33:31.490 20713 20722 E WCS     : 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:33:31.490 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:33:31.490 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:33:31.494  1049  1049 W WearServices: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:33:31.494  1049  1049 W WearServices: 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:33:31.494  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:33:31.494  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:33:31.502 20713 20722 E WCS     : 	Suppressed: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:33:31.502 20713 20722 E WCS     : 	Caused by: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:33:31.502 20713 20722 E WCS     : 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:33:31.502 20713 20722 E WCS     : 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:33:31.502 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:33:31.502 20713 20722 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:33:31.744  5329  5329 E Icon    : android.content.res.Resources$NotFoundException: Resource ID #0x0
+04-30 22:33:34.969  1049  1049 W WearServices: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:33:34.969  1049  1049 W WearServices: 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:33:34.969  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:33:34.969  1049  1049 W WearServices: 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:33:34.972 20713 20721 E WCS     : 	Suppressed: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:33:34.972 20713 20721 E WCS     : 	Caused by: java.lang.ClassNotFoundException: com.google.common.util.concurrent.UncheckedExecutionException
+04-30 22:33:34.972 20713 20721 E WCS     : 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3356)
+04-30 22:33:34.972 20713 20721 E WCS     : 	at android.os.Parcel.createException(Parcel.java:3336)
+04-30 22:33:34.972 20713 20721 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3319)
+04-30 22:33:34.972 20713 20721 E WCS     : 	at android.os.Parcel.readException(Parcel.java:3261)
+04-30 22:33:39.028  5329  5329 E Icon    : android.content.res.Resources$NotFoundException: Resource ID #0x0
+04-30 22:33:39.624  5329  5329 E RWF     : eje main [Reveal:125675572]Error unregistering eiz@c1319a : java.lang.IllegalArgumentException: Receiver not registered: eiz@c1319a
+04-30 22:33:39.627  5329  5329 E BroadcastsReceiver: Exception occurred in BroadcastsReceiver.onDestroy
+04-30 22:33:39.627  5329  5329 E BroadcastsReceiver: java.lang.IllegalArgumentException: Receiver not registered: axe@6cb46bc
+04-30 22:33:39.628  5329  5329 E RWF     : eig main [Reveal:125675572]AmbientTransitionController unregister failed java.lang.IllegalArgumentException: Receiver not registered: dqn@be8d31c
+04-30 22:33:54.104  1031  1031 W InputMethodSessionWrapper: android.os.DeadObjectException

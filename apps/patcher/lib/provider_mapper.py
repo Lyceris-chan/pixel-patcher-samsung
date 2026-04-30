@@ -45,16 +45,16 @@ PIXEL_PROVIDERS: Dict[str, str] = {
 # Samsung Health complication provider component names
 # These are the equivalent providers on Samsung Galaxy Watch devices
 SAMSUNG_PROVIDERS: Dict[str, str] = {
-    "STEP_COUNT": "com.samsung.android.wear.shealth/com.samsung.android.wear.shealth.complications.steps.StepsComplicationProviderService",
-    "HEART_RATE": "com.samsung.android.wear.shealth/com.samsung.android.wear.shealth.complications.heartrate.HeartrateComplicationProviderService",
-    "CALORIES": "com.samsung.android.wear.shealth/com.samsung.android.wear.shealth.complications.calories.CaloriesComplicationProviderService",
-    "DISTANCE": "com.samsung.android.wear.shealth/com.samsung.android.wear.shealth.complications.distance.DistanceComplicationProviderService",
-    "ACTIVE_MINUTES": "com.samsung.android.wear.shealth/com.samsung.android.wear.shealth.complications.activetime.ActiveTimeComplicationProviderService",
-    "FLOORS": "com.samsung.android.wear.shealth/com.samsung.android.wear.shealth.complications.floors.FloorsComplicationProviderService",
-    "SLEEP": "com.samsung.android.wear.shealth/com.samsung.android.wear.shealth.complications.sleep.SleepComplicationProviderService",
-    "BLOOD_OXYGEN": "com.samsung.android.wear.shealth/com.samsung.android.wear.shealth.complications.bloodoxygen.BloodOxygenComplicationProviderService",
-    "STRESS": "com.samsung.android.wear.shealth/com.samsung.android.wear.shealth.complications.stress.StressComplicationProviderService",
-    "WATER": "com.samsung.android.wear.shealth/com.samsung.android.wear.shealth.complications.water.WaterComplicationProviderService",
+    "STEP_COUNT": "com.pixelbridge.complications/com.pixelbridge.complications.StepsComplicationService",
+    "HEART_RATE": "com.pixelbridge.complications/com.pixelbridge.complications.HeartRateComplicationService",
+    "CALORIES": "com.pixelbridge.complications/com.pixelbridge.complications.CaloriesComplicationService",
+    "DISTANCE": "com.pixelbridge.complications/com.pixelbridge.complications.DistanceComplicationService",
+    "ACTIVE_MINUTES": "com.pixelbridge.complications/com.pixelbridge.complications.ActiveMinutesComplicationService",
+    "FLOORS": "com.pixelbridge.complications/com.pixelbridge.complications.FloorsComplicationService",
+    "SLEEP": "com.pixelbridge.complications/com.pixelbridge.complications.SleepComplicationService",
+    "BLOOD_OXYGEN": "com.pixelbridge.complications/com.pixelbridge.complications.SpO2ComplicationService",
+    "STRESS": "com.pixelbridge.complications/com.pixelbridge.complications.HRVComplicationService",
+    "WATER": "com.pixelbridge.complications/com.pixelbridge.complications.ElevationComplicationService",
 }
 
 
@@ -160,21 +160,21 @@ def get_all_mappings() -> List[Tuple[str, str, str]]:
 
 def is_samsung_provider(provider: str) -> bool:
     """
-    Check if a provider component name is a Samsung Health provider.
+    Check if a provider component name is a Pixel Bridge provider (replacing Samsung).
     
     Args:
         provider: Provider component name to check
         
     Returns:
-        bool: True if provider is a Samsung Health provider, False otherwise
+        bool: True if provider is a Pixel Bridge provider, False otherwise
         
     Example:
-        >>> is_samsung_provider("com.samsung.android.wear.shealth/...")
+        >>> is_samsung_provider("com.pixelbridge.complications/...")
         True
         >>> is_samsung_provider("com.google.android.apps.fitness/...")
         False
     """
-    return provider.startswith("com.samsung.android.wear.shealth/")
+    return provider.startswith("com.pixelbridge.complications/")
 
 
 def is_pixel_provider(provider: str) -> bool:
