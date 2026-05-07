@@ -4,9 +4,13 @@ object ComplicationValueSanitizer {
     private val sleepPattern = Regex("(\d+)h(?:\s*(\d+)m)?")
 
     fun sanitize(raw: Float, min: Float, max: Float): Float {
-        if (!raw.isFinite()) return min
         if (!min.isFinite() || !max.isFinite() || max <= min) return min
-        return raw.coerceIn(min, max)
+        val epsilon = 0.001f
+        val lower = min + epsilon
+        val upper = max - epsilon
+        if (lower >= upper) return min
+        val candidate = if (raw.isFinite()) raw else lower
+        return candidate.coerceIn(lower, upper)
     }
 
     fun parseNumeric(raw: String): Float {

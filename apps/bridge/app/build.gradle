@@ -11,8 +11,8 @@ android {
         applicationId "com.pixelbridge.complications"
         minSdk 30
         targetSdk 36
-        versionCode 210
-        versionName "2.1.0"
+        versionCode 400
+        versionName "4.0.0"
     }
 
     buildTypes {
@@ -42,4 +42,5 @@ dependencies {
     implementation 'androidx.health.connect:connect-client:1.1.0-beta01'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.10.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
+    implementation 'com.google.guava:guava:33.3.1-android'
 }
