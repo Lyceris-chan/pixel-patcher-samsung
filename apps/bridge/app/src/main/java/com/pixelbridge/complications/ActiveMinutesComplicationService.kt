@@ -23,7 +23,7 @@ class ActiveMinutesComplicationService : SuspendingComplicationDataSourceService
         
         val activeMinutes = healthDataManager.getLatestDataByNames(listOf("ACTIVE_EXERCISE_DURATION_DAILY", "ACTIVE_EXERCISE_DURATION_TOTAL"))
         val textStr = activeMinutes.toString()
-        val numValue = textStr.replace(Regex("[^\d.]"), "").toFloatOrNull() ?: 0f
+        val numValue = ComplicationValueSanitizer.parseNumeric(textStr)
         
         val icon = MonochromaticImage.Builder(
             Icon.createWithResource(this, R.drawable.ic_generic_health)
@@ -36,7 +36,7 @@ class ActiveMinutesComplicationService : SuspendingComplicationDataSourceService
         return when (request.complicationType) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = numValue.coerceIn(0f, 60.0f),
+                    value = ComplicationValueSanitizer.sanitize(numValue, min = 0f, max = 60.0f),
                     min = 0f,
                     max = 60.0f,
                     contentDescription = desc
@@ -69,7 +69,7 @@ class ActiveMinutesComplicationService : SuspendingComplicationDataSourceService
         return when (type) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = 45.0f.coerceIn(0f, 60.0f),
+                    value = 45.0f,
                     min = 0f,
                     max = 60.0f,
                     contentDescription = desc

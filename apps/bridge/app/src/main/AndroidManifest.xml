@@ -242,5 +242,17 @@
                 android:value="0" />
         </service>
 
+
+        
+
+
+        <service android:name=".StepsGoalTileService" android:exported="true" android:label="Steps Goal (Pixel Bridge)" android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER"><intent-filter><action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" /></intent-filter></service>
+        <service android:name=".HeartRateGoalTileService" android:exported="true" android:label="Heart Rate Goal (Pixel Bridge)" android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER"><intent-filter><action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" /></intent-filter></service>
+        <service android:name=".CaloriesGoalTileService" android:exported="true" android:label="Calories Goal (Pixel Bridge)" android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER"><intent-filter><action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" /></intent-filter></service>
+        <service android:name=".DistanceGoalTileService" android:exported="true" android:label="Distance Goal (Pixel Bridge)" android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER"><intent-filter><action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" /></intent-filter></service>
+        <service android:name=".FloorsGoalTileService" android:exported="true" android:label="Floors Goal (Pixel Bridge)" android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER"><intent-filter><action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" /></intent-filter></service>
+        <service android:name=".SpO2GoalTileService" android:exported="true" android:label="SpO2 Goal (Pixel Bridge)" android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER"><intent-filter><action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" /></intent-filter></service>
+        <service android:name=".SleepGoalTileService" android:exported="true" android:label="Sleep Goal (Pixel Bridge)" android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER"><intent-filter><action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" /></intent-filter></service>
+
     </application>
 </manifest>

@@ -22,8 +22,8 @@ class HRVComplicationService : SuspendingComplicationDataSourceService() {
         healthDataManager.registerPassiveListener()
         
         val value = healthDataManager.getLatestDataByNames(listOf("HEART_RATE_VARIABILITY_RMSSD", "HRV_RMSSD"))
-        val textStr = ue.toString()
-        val numValue = textStr.replace(Regex("[^\d.]"), "").toFloatOrNull() ?: 0f
+        val textStr = value.toString()
+        val numValue = ComplicationValueSanitizer.parseNumeric(textStr)
         
         val icon = MonochromaticImage.Builder(
             Icon.createWithResource(this, R.drawable.ic_generic_health)
@@ -36,7 +36,7 @@ class HRVComplicationService : SuspendingComplicationDataSourceService() {
         return when (request.complicationType) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = numValue.coerceIn(0f, 150.0f),
+                    value = ComplicationValueSanitizer.sanitize(numValue, min = 0f, max = 150.0f),
                     min = 0f,
                     max = 150.0f,
                     contentDescription = desc
@@ -69,7 +69,7 @@ class HRVComplicationService : SuspendingComplicationDataSourceService() {
         return when (type) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = 60.0f.coerceIn(0f, 150.0f),
+                    value = 60.0f,
                     min = 0f,
                     max = 150.0f,
                     contentDescription = desc
