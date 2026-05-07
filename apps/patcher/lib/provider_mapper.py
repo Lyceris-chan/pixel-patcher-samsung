@@ -39,6 +39,9 @@ PIXEL_PROVIDERS: Dict[str, str] = {
     "FLOORS": "com.google.android.apps.fitness/com.google.android.apps.fitness.complications.FloorsComplicationProviderService",
     "SLEEP": "com.google.android.apps.wearable.settings/com.google.android.clockwork.settings.complications.SleepComplicationProviderService",
     "BLOOD_OXYGEN": "com.google.android.apps.wearable.settings/com.google.android.clockwork.settings.complications.SpO2ComplicationProviderService",
+    "RESPIRATORY_RATE": "com.google.android.apps.fitness/com.google.android.apps.fitness.complications.RespiratoryRateComplicationProviderService",
+    "ELEVATION": "com.google.android.apps.fitness/com.google.android.apps.fitness.complications.ElevationComplicationProviderService",
+    "HRV": "com.google.android.apps.fitness/com.google.android.apps.fitness.complications.HRVComplicationProviderService",
 }
 
 
@@ -54,6 +57,9 @@ SAMSUNG_PROVIDERS: Dict[str, str] = {
     "SLEEP": "com.pixelbridge.complications/com.pixelbridge.complications.SleepComplicationService",
     "BLOOD_OXYGEN": "com.pixelbridge.complications/com.pixelbridge.complications.SpO2ComplicationService",
     "STRESS": "com.pixelbridge.complications/com.pixelbridge.complications.HRVComplicationService",
+    "ELEVATION": "com.pixelbridge.complications/com.pixelbridge.complications.ElevationComplicationService",
+    "RESPIRATORY_RATE": "com.pixelbridge.complications/com.pixelbridge.complications.RespiratoryRateComplicationService",
+    "HRV": "com.pixelbridge.complications/com.pixelbridge.complications.HRVComplicationService",
     "WATER": "com.pixelbridge.complications/com.pixelbridge.complications.ElevationComplicationService",
 }
 
@@ -67,6 +73,11 @@ PROVIDER_MAPPINGS: Dict[str, str] = {
     PIXEL_PROVIDERS["DISTANCE"]: SAMSUNG_PROVIDERS["DISTANCE"],
     PIXEL_PROVIDERS["ACTIVE_MINUTES"]: SAMSUNG_PROVIDERS["ACTIVE_MINUTES"],
     PIXEL_PROVIDERS["FLOORS"]: SAMSUNG_PROVIDERS["FLOORS"],
+    PIXEL_PROVIDERS["SLEEP"]: SAMSUNG_PROVIDERS["SLEEP"],
+    PIXEL_PROVIDERS["BLOOD_OXYGEN"]: SAMSUNG_PROVIDERS["BLOOD_OXYGEN"],
+    PIXEL_PROVIDERS["RESPIRATORY_RATE"]: SAMSUNG_PROVIDERS["RESPIRATORY_RATE"],
+    PIXEL_PROVIDERS["ELEVATION"]: SAMSUNG_PROVIDERS["ELEVATION"],
+    PIXEL_PROVIDERS["HRV"]: SAMSUNG_PROVIDERS["HRV"],
 }
 
 
@@ -81,8 +92,11 @@ COMPLICATION_TYPE_TO_PROVIDER: Dict[str, Tuple[str, str]] = {
     "FLOORS": (PIXEL_PROVIDERS["FLOORS"], SAMSUNG_PROVIDERS["FLOORS"]),
     "SLEEP": (PIXEL_PROVIDERS["SLEEP"], SAMSUNG_PROVIDERS["SLEEP"]),
     "BLOOD_OXYGEN": (PIXEL_PROVIDERS["BLOOD_OXYGEN"], SAMSUNG_PROVIDERS["BLOOD_OXYGEN"]),
-    "STRESS": (None, SAMSUNG_PROVIDERS["STRESS"]),  # Samsung-only
-    "WATER": (None, SAMSUNG_PROVIDERS["WATER"]),  # Samsung-only
+    "RESPIRATORY_RATE": (PIXEL_PROVIDERS["RESPIRATORY_RATE"], SAMSUNG_PROVIDERS["RESPIRATORY_RATE"]),
+    "ELEVATION": (PIXEL_PROVIDERS["ELEVATION"], SAMSUNG_PROVIDERS["ELEVATION"]),
+    "HRV": (PIXEL_PROVIDERS["HRV"], SAMSUNG_PROVIDERS["HRV"]),
+    "STRESS": (None, SAMSUNG_PROVIDERS["STRESS"]),
+    "WATER": (None, SAMSUNG_PROVIDERS["WATER"]),
 }
 
 
@@ -193,7 +207,7 @@ def is_pixel_provider(provider: str) -> bool:
         >>> is_pixel_provider("com.samsung.android.wear.shealth/...")
         False
     """
-    return provider.startswith("com.google.android.apps.fitness/")
+    return provider.startswith("com.google.android.apps.fitness/") or provider.startswith("com.google.android.apps.wearable.settings/")
 
 
 def get_complication_type_from_provider(provider: str) -> Optional[str]:

@@ -8,7 +8,6 @@ import androidx.health.connect.client.records.SleepSessionRecord
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import androidx.health.services.client.HealthServices
-import androidx.health.services.client.PassiveMonitoringClient
 import androidx.health.services.client.PassiveListenerService
 import androidx.health.services.client.data.DataPointContainer
 import androidx.health.services.client.data.DataType
@@ -16,14 +15,27 @@ import androidx.health.services.client.data.PassiveListenerConfig
 import androidx.health.services.client.data.DataPoint
 import androidx.health.services.client.data.CumulativeDataPoint
 import androidx.health.services.client.data.SampleDataPoint
-import androidx.health.services.client.data.IntervalDataPoint
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
-import com.google.common.util.concurrent.ListenableFuture
 import kotlinx.coroutines.guava.await
 import java.time.Duration
 import java.time.Instant
 
 class HealthDataManager(private val context: Context) {
+    companion object {
+        private const val PREFS_NAME = "health_data"
+        private const val UNKNOWN_VALUE = "--"
+    }
+
+    private val complicationTypeAliases: Map<String, Set<String>> = mapOf(
+        DataType.HEART_RATE_BPM.name to setOf(DataType.HEART_RATE_BPM.name),
+        DataType.STEPS.name to setOf(DataType.STEPS.name, "STEPS_DAILY"),
+        DataType.CALORIES_TOTAL.name to setOf(DataType.CALORIES_TOTAL.name, "CALORIES_DAILY"),
+        DataType.DISTANCE.name to setOf(DataType.DISTANCE.name, "DISTANCE_DAILY"),
+        DataType.FLOORS.name to setOf(DataType.FLOORS.name, "FLOORS_DAILY"),
+        "SPO2" to setOf("SPO2"),
+        "RESPIRATORY_RATE" to setOf("RESPIRATORY_RATE")
+    )
+
     private val healthServicesClient = HealthServices.getClient(context)
     private val passiveMonitoringClient = healthServicesClient.passiveMonitoringClient
     private val healthConnectClient by lazy { HealthConnectClient.getOrCreate(context) }
@@ -36,16 +48,7 @@ class HealthDataManager(private val context: Context) {
     suspend fun registerPassiveListener() {
         val supported = getSupportedDataTypes()
         // Use stable 1.0.0 DataType names
-        val requestedNames = setOf(
-            DataType.HEART_RATE_BPM.name,
-            DataType.STEPS.name,
-            DataType.CALORIES_TOTAL.name,
-            DataType.DISTANCE.name,
-            DataType.FLOORS.name,
-            "SPO2", // SpO2 might still be named SPO2
-            "VO2_MAX",
-            "RESPIRATORY_RATE"
-        )
+        val requestedNames = complicationTypeAliases.values.flatten().toSet()
         
         val dataTypes = supported.filter { it.name in requestedNames }.toSet()
 
@@ -74,17 +77,16 @@ class HealthDataManager(private val context: Context) {
     }
 
     fun getLatestDataByName(name: String): String {
-        val prefs = context.getSharedPreferences("health_data", Context.MODE_PRIVATE)
-        return prefs.getString(name, "--") ?: "--"
+        return getLatestDataByNames(listOf(name))
     }
 
     fun getLatestDataByNames(names: List<String>): String {
-        val prefs = context.getSharedPreferences("health_data", Context.MODE_PRIVATE)
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         for (name in names) {
             val value = prefs.getString(name, null)
-            if (value != null && value != "--") return value
+            if (value != null && value != UNKNOWN_VALUE) return value
         }
-        return "--"
+        return UNKNOWN_VALUE
     }
 
     suspend fun getSleepDurationLast24h(): String {
@@ -102,14 +104,14 @@ class HealthDataManager(private val context: Context) {
                 Duration.between(it.startTime, it.endTime).toMinutes()
             }
             
-            if (totalDuration == 0L) return "--"
+            if (totalDuration == 0L) return UNKNOWN_VALUE
             
             val hours = totalDuration / 60
             val minutes = totalDuration % 60
             return if (hours > 0) String.format("%dh %dm", hours, minutes) else String.format("%dm", minutes)
         } catch (e: Exception) {
             Log.e("HealthDataManager", "Failed to read sleep records", e)
-            return "--"
+            return UNKNOWN_VALUE
         }
     }
 }
@@ -117,7 +119,7 @@ class HealthDataManager(private val context: Context) {
 class HealthPassiveListenerService : PassiveListenerService() {
     override fun onNewDataPointsReceived(dataPointContainer: DataPointContainer) {
         val updatedTypes = mutableSetOf<String>()
-        val prefs = getSharedPreferences("health_data", Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val editor = prefs.edit()
 
         val allDataPoints = mutableListOf<DataPoint<*>>()
@@ -132,7 +134,7 @@ class HealthPassiveListenerService : PassiveListenerService() {
                 val typeName = dataPoint.dataType.name
                 editor.putString(typeName, formatted)
                 updatedTypes.add(typeName)
-                Log.d("HealthPassiveListener", "Updated \$typeName: \$formatted")
+                Log.d("HealthPassiveListener", "Updated $typeName: $formatted")
             }
         }
         editor.apply()
@@ -176,7 +178,7 @@ class HealthPassiveListenerService : PassiveListenerService() {
                     val sample = dataPoint as SampleDataPoint<Double>
                     String.format("%.0f/min", sample.value)
                 }
-                else -> dataPoint.toString()
+                else -> null
             }
         } catch (e: Exception) {
             Log.e("HealthPassiveListener", "Error formatting ${dataPoint.dataType.name}", e)
@@ -185,14 +187,19 @@ class HealthPassiveListenerService : PassiveListenerService() {
     }
 
     private fun triggerComplicationUpdates(types: Set<String>) {
-        val typeToService = mutableMapOf<String, Class<*>>()
-        typeToService[DataType.HEART_RATE_BPM.name] = HeartRateComplicationService::class.java
-        typeToService[DataType.STEPS.name] = StepsComplicationService::class.java
-        typeToService[DataType.CALORIES_TOTAL.name] = CaloriesComplicationService::class.java
-        typeToService[DataType.DISTANCE.name] = DistanceComplicationService::class.java
-        typeToService[DataType.FLOORS.name] = FloorsComplicationService::class.java
-        typeToService["SPO2"] = SpO2ComplicationService::class.java
-        typeToService["RESPIRATORY_RATE"] = RespiratoryRateComplicationService::class.java
+        val typeToService = mapOf(
+            DataType.HEART_RATE_BPM.name to HeartRateComplicationService::class.java,
+            DataType.STEPS.name to StepsComplicationService::class.java,
+            "STEPS_DAILY" to StepsComplicationService::class.java,
+            DataType.CALORIES_TOTAL.name to CaloriesComplicationService::class.java,
+            "CALORIES_DAILY" to CaloriesComplicationService::class.java,
+            DataType.DISTANCE.name to DistanceComplicationService::class.java,
+            "DISTANCE_DAILY" to DistanceComplicationService::class.java,
+            DataType.FLOORS.name to FloorsComplicationService::class.java,
+            "FLOORS_DAILY" to FloorsComplicationService::class.java,
+            "SPO2" to SpO2ComplicationService::class.java,
+            "RESPIRATORY_RATE" to RespiratoryRateComplicationService::class.java
+        )
 
         types.forEach { typeName ->
             typeToService[typeName]?.let { serviceClass ->

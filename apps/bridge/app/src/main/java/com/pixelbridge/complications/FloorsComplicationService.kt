@@ -31,6 +31,7 @@ class FloorsComplicationService : SuspendingComplicationDataSourceService() {
         
         val text = PlainComplicationText.Builder(textStr).build()
         val desc = PlainComplicationText.Builder("Floors").build()
+        val tapAction = ComplicationIntents.healthTapIntent(this)
 
         return when (request.complicationType) {
             ComplicationType.RANGED_VALUE -> {
@@ -42,6 +43,7 @@ class FloorsComplicationService : SuspendingComplicationDataSourceService() {
                 )
                 .setText(text)
                 .setMonochromaticImage(icon)
+                .setTapAction(tapAction)
                 .build()
             }
             else -> {
@@ -50,6 +52,7 @@ class FloorsComplicationService : SuspendingComplicationDataSourceService() {
                     contentDescription = desc
                 )
                 .setMonochromaticImage(icon)
+                .setTapAction(tapAction)
                 .build()
             }
         }
@@ -61,6 +64,7 @@ class FloorsComplicationService : SuspendingComplicationDataSourceService() {
         ).build()
         val text = PlainComplicationText.Builder("12").build()
         val desc = PlainComplicationText.Builder("Floors").build()
+        val tapAction = ComplicationIntents.healthTapIntent(this)
 
         return when (type) {
             ComplicationType.RANGED_VALUE -> {
@@ -72,6 +76,7 @@ class FloorsComplicationService : SuspendingComplicationDataSourceService() {
                 )
                 .setText(text)
                 .setMonochromaticImage(icon)
+                .setTapAction(tapAction)
                 .build()
             }
             else -> {
@@ -80,6 +85,7 @@ class FloorsComplicationService : SuspendingComplicationDataSourceService() {
                     contentDescription = desc
                 )
                 .setMonochromaticImage(icon)
+                .setTapAction(tapAction)
                 .build()
             }
         }

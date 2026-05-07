@@ -31,6 +31,7 @@ class StepsComplicationService : SuspendingComplicationDataSourceService() {
         
         val text = PlainComplicationText.Builder(textStr).build()
         val desc = PlainComplicationText.Builder("Steps").build()
+        val tapAction = ComplicationIntents.healthTapIntent(this)
 
         return when (request.complicationType) {
             ComplicationType.GOAL_PROGRESS -> {
@@ -41,6 +42,7 @@ class StepsComplicationService : SuspendingComplicationDataSourceService() {
                 )
                 .setText(text)
                 .setMonochromaticImage(icon)
+                .setTapAction(tapAction)
                 .build()
             }
             ComplicationType.RANGED_VALUE -> {
@@ -52,6 +54,7 @@ class StepsComplicationService : SuspendingComplicationDataSourceService() {
                 )
                 .setText(text)
                 .setMonochromaticImage(icon)
+                .setTapAction(tapAction)
                 .build()
             }
             else -> {
@@ -60,6 +63,7 @@ class StepsComplicationService : SuspendingComplicationDataSourceService() {
                     contentDescription = desc
                 )
                 .setMonochromaticImage(icon)
+                .setTapAction(tapAction)
                 .build()
             }
         }
@@ -71,6 +75,7 @@ class StepsComplicationService : SuspendingComplicationDataSourceService() {
         ).build()
         val text = PlainComplicationText.Builder("5240").build()
         val desc = PlainComplicationText.Builder("Steps").build()
+        val tapAction = ComplicationIntents.healthTapIntent(this)
 
         return when (type) {
             ComplicationType.GOAL_PROGRESS -> {
@@ -81,6 +86,7 @@ class StepsComplicationService : SuspendingComplicationDataSourceService() {
                 )
                 .setText(text)
                 .setMonochromaticImage(icon)
+                .setTapAction(tapAction)
                 .build()
             }
             ComplicationType.RANGED_VALUE -> {
@@ -92,6 +98,7 @@ class StepsComplicationService : SuspendingComplicationDataSourceService() {
                 )
                 .setText(text)
                 .setMonochromaticImage(icon)
+                .setTapAction(tapAction)
                 .build()
             }
             else -> {
@@ -100,6 +107,7 @@ class StepsComplicationService : SuspendingComplicationDataSourceService() {
                     contentDescription = desc
                 )
                 .setMonochromaticImage(icon)
+                .setTapAction(tapAction)
                 .build()
             }
         }
