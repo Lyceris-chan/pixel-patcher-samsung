@@ -34,6 +34,8 @@ PLATFORM_TOOLS = {
         },
         'adb': {
             'url': 'https://dl.google.com/android/repository/platform-tools-latest-linux.zip',
+            'sha256': None,
+            'checksum_required': False,
             'format': 'zip',
             'dest': 'platform-tools'
         },
@@ -47,18 +49,20 @@ PLATFORM_TOOLS = {
     'Windows': {
         'jre': {
             'url': 'https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.10%2B7/OpenJDK17U-jre_x64_windows_hotspot_17.0.10_7.zip',
-            'sha256': '6d50125860714b848c90355461971752c03884...', # Will use standard checksum if known
+            'sha256': None,  # Checksum intentionally unset until verified upstream
             'format': 'zip',
             'dest': 'jre'
         },
         'adb': {
             'url': 'https://dl.google.com/android/repository/platform-tools-latest-windows.zip',
+            'sha256': None,
+            'checksum_required': False,
             'format': 'zip',
             'dest': 'platform-tools'
         },
         '7za': {
             'url': 'https://www.7-zip.org/a/7zr.exe',
-            'sha256': 'f9c6a1e80931502f1a660d00f6b4d32a9315b80a9c8c8b4f8c8b4f8c8b4f8c8',
+            'sha256': None,  # Checksum intentionally unset until verified upstream
             'executable': True,
             'rename': '7za.exe'
         }
@@ -72,6 +76,8 @@ PLATFORM_TOOLS = {
         },
         'adb': {
             'url': 'https://dl.google.com/android/repository/platform-tools-latest-darwin.zip',
+            'sha256': None,
+            'checksum_required': False,
             'format': 'zip',
             'dest': 'platform-tools'
         },
@@ -94,6 +100,11 @@ GENERIC_TOOLS = {
     }
 }
 
+
+
+def is_valid_sha256(value: Optional[str]) -> bool:
+    return isinstance(value, str) and len(value) == 64 and all(ch in "0123456789abcdef" for ch in value.lower())
+
 def verify_sha256(filepath: Path, expected_hash: str) -> bool:
     sha256_hash = hashlib.sha256()
     try:
@@ -112,6 +123,9 @@ def download_file(tool_name: str, config: Dict[str, Any]) -> bool:
     
     dest = TOOLS_DIR / filename
     expected_hash = config.get('sha256')
+    if expected_hash is not None and not is_valid_sha256(expected_hash):
+        print(f"[!] Invalid SHA-256 for {tool_name}; skipping checksum enforcement until fixed.")
+        expected_hash = None
 
     if dest.exists() and expected_hash and verify_sha256(dest, expected_hash):
         print(f"[✓] {filename} already exists and verified.")
@@ -155,6 +169,26 @@ def extract_archive(archive_path: Path, dest_dir: Path, archive_format: str):
         print(f"[✗] Failed to extract {archive_path.name}: {e}")
         return False
 
+
+
+def validate_tool_matrix() -> List[str]:
+    """Validate that required tools are covered across platforms and have sane checksum metadata."""
+    issues: List[str] = []
+    required_platform_tools = {"jre", "adb"}
+    for os_name, tools in PLATFORM_TOOLS.items():
+        missing = sorted(required_platform_tools - set(tools.keys()))
+        if missing:
+            issues.append(f"{os_name}: missing required tools {missing}")
+        for tool_name, cfg in tools.items():
+            expected_hash = cfg.get("sha256")
+            checksum_required = cfg.get("checksum_required", expected_hash is not None)
+            if checksum_required and not is_valid_sha256(expected_hash):
+                issues.append(f"{os_name}/{tool_name}: checksum required but invalid/missing")
+    for tool_name, cfg in GENERIC_TOOLS.items():
+        if not is_valid_sha256(cfg.get("sha256")):
+            issues.append(f"generic/{tool_name}: invalid checksum")
+    return issues
+
 def main():
     TOOLS_DIR.mkdir(parents=True, exist_ok=True)
     
@@ -166,6 +200,12 @@ def main():
     if os_name not in PLATFORM_TOOLS:
         print(f"[✗] Unsupported OS: {os_name}")
         return 1
+
+    matrix_issues = validate_tool_matrix()
+    if matrix_issues:
+        print("[!] Tool matrix warnings:")
+        for issue in matrix_issues:
+            print(f"    - {issue}")
 
     # Prepare download list
     download_tasks = []

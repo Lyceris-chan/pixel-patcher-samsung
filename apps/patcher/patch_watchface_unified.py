@@ -107,7 +107,7 @@ def signal_handler(signum, frame):
     """Handle Ctrl+C gracefully with cleanup."""
     global _interrupted
     _interrupted = True
-    print("\n⚠️  Operation cancelled by user. Cleaning up...")
+    print("\nOperation cancelled. Cleaning up temporary files...")
     cleanup_on_failure()
     sys.exit(130)
 
@@ -127,9 +127,9 @@ def log(message: str, level: str = "INFO") -> None:
     timestamp = datetime.now().strftime("%H:%M:%S")
     prefix = {
         "INFO": "   ",
-        "SUCCESS": "✅ ",
-        "WARNING": "⚠️  ",
-        "ERROR": "❌ "
+        "SUCCESS": "[OK] ",
+        "WARNING": "[WARN] ",
+        "ERROR": "[ERROR] "
     }.get(level, "   ")
     
     print(f"[{timestamp}] {prefix}{message}", flush=True)
@@ -225,7 +225,7 @@ def check_tool_availability() -> bool:
         if tool_path and os.path.exists(tool_path):
             log(f"  ✓ {tool_name}: {tool_path}")
         else:
-            log(f"  ✗ {tool_name}: NOT FOUND or invalid path", "ERROR")
+            log(f"  missing: {tool_name} (path not configured)", "ERROR")
             all_available = False
     
     return all_available
@@ -564,7 +564,7 @@ def main() -> int:
     global _cleanup_dirs
     
     print("=" * 70)
-    print("Unified Watchface Patching Pipeline for Samsung Galaxy Watch")
+    print("Watchface Patching Pipeline (Guided Mode)")
     print("=" * 70)
     print("Integrates ALL patches: legacy + complication + defaults")
     print()
