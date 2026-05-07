@@ -5,16 +5,12 @@ Pixel Watch Toolkit - Production Interoperability Suite
 Automated pipeline for adapting Pixel Watch resources to Samsung hardware.
 Includes full Wizard workflow, dynamic patching, and health data bridging.
 
-Version: 2.1.0
+Version: 4.0.0
 """
 
 import os
 import sys
 import subprocess
-import zipfile
-import shutil
-import signal
-import concurrent.futures
 from pathlib import Path
 from datetime import datetime
 from typing import Tuple, List, Optional, Callable
@@ -58,14 +54,18 @@ def print_section(title: str):
 
 
 def run_adb_command(cmd: list) -> Tuple[bool, str]:
-    if not ADB: return False, "ADB not found."
+    if not ADB:
+        return False, "ADB not found."
     try:
         result = subprocess.run([ADB] + cmd, capture_output=True, text=True, timeout=45)
         return result.returncode == 0, result.stdout.strip()
-    except Exception as e: return False, str(e)
+    except Exception as e:
+        return False, str(e)
 
 
 def check_setup():
+    if "config" not in globals() or config is None:
+        raise RuntimeError("Missing config module. Run apps/patcher/setup_tools.py first.")
     conf = config.get_config()
     required = ['java', 'adb', '7z', 'apktool', 'signer']
     missing = [t for t in required if not conf.get(t) or not os.path.exists(conf.get(t))]
@@ -80,16 +80,29 @@ def check_setup():
             global CONF, ADB, JAVA, SEVENZ
             CONF = config.get_config()
             ADB, JAVA, SEVENZ = CONF['adb'], CONF['java'], CONF['7z']
-        else: sys.exit(1)
+        else:
+            sys.exit(1)
 
 
 def get_apk_info(apk_path: str) -> Optional[dict]:
-    # Extracting info via apktool is too slow for thousands of APKs.
-    # Fallback to basic info based on filename to speed up scanning.
     label = os.path.basename(apk_path).replace('.apk', '')
+    if not ADB:
+        return {'package': "unknown", 'version': "unknown", 'label': label, 'visible': True}
+
+    ok, out = run_adb_command(["shell", "pm", "dump", apk_path])
+    package_name = "unknown"
+    version_name = "unknown"
+    if ok and out:
+        for line in out.splitlines():
+            line = line.strip()
+            if line.startswith("Package [") and "]" in line:
+                package_name = line.split("[", 1)[1].split("]", 1)[0]
+            if "versionName=" in line and version_name == "unknown":
+                version_name = line.split("versionName=", 1)[1].strip()
+
     return {
-        'package': "unknown",
-        'version': "unknown",
+        'package': package_name,
+        'version': version_name,
         'label': label,
         'visible': True
     }
@@ -120,7 +133,8 @@ def push_sound(local: str, cat: str):
                 namespace = "global" if cat in ("charging_sounds_file", "low_battery_sound") else "system"
                 run_adb_command(["shell", "settings", "put", namespace, cat, uri])
                 print(f"{Colors.GREEN}Successfully set {name} as default {cat}{Colors.ENDC}")
-            except: pass
+            except Exception as e:
+                print(f"{Colors.YELLOW}Warning: failed to set media URI for {name}: {e}{Colors.ENDC}")
 
 
 def menu_wizard():
@@ -169,8 +183,7 @@ def menu_wizard():
     am = AppManager()
     am.verify_portable_tools()
     
-    import config as lib_config
-    apks_d = Path(lib_config.APKS_DIR)
+    apks_d = Path(config.APKS_DIR)
     apks = list(apks_d.glob("**/*.apk"))
     sel_apks = []
     if apks:
@@ -190,10 +203,11 @@ def menu_wizard():
             try:
                 ids = parse_range(c)
                 sel_apks = [meta[x-1][0] for x in ids if 0 < x <= len(meta)]
-            except: pass
+            except Exception as e:
+                print(f"{Colors.YELLOW}Warning: failed to set media URI for {name}: {e}{Colors.ENDC}")
 
     # Sound Selection
-    snd_d = Path(lib_config.SOUNDS_DIR)
+    snd_d = Path(config.SOUNDS_DIR)
     snds = list(snd_d.glob("**/*.ogg"))
     sel_snds = []
     if snds:
@@ -204,7 +218,8 @@ def menu_wizard():
             snds.sort(key=lambda x: x.name)
             for i, s in enumerate(snds, 1): print(f"{i:<4} {s.name}")
             try: sel_snds = [snds[x-1] for x in parse_range(input("IDs: ")) if 0 < x <= len(snds)]
-            except: pass
+            except Exception as e:
+                print(f"{Colors.YELLOW}Warning: failed to set media URI for {name}: {e}{Colors.ENDC}")
         elif sc == '3': sel_snds = snds
 
     # Watchface and Bridge bundle
@@ -222,7 +237,10 @@ def menu_wizard():
     for wf in watchfaces:
         out = str(wf).replace('.apk', '_patched.apk')
         print(f"Patching {wf.name}...")
-        subprocess.run([sys.executable, 'apps/patcher/patch_watchface_unified.py', str(wf), out])
+        patch_proc = subprocess.run([sys.executable, 'apps/patcher/patch_watchface_unified.py', str(wf), out], capture_output=True, text=True)
+        if patch_proc.returncode != 0:
+            print(f"{Colors.RED}Failed to patch {wf.name}: {patch_proc.stderr.strip()}{Colors.ENDC}")
+            continue
         if run_adb_command(["install", "-r", out])[0]:
             from adb_manager import grant_production_permissions
             info = get_apk_info(out)
@@ -240,8 +258,17 @@ def menu_wizard():
 
     if sel_snds == "DEFAULTS":
         for s in snds:
-            if 'Ringtone' in s.name: push_sound(str(s), "ringtone")
-            elif 'Notification' in s.name: push_sound(str(s), "notification_sound")
+            lower_name = s.name.lower()
+            if 'ringtone' in lower_name:
+                push_sound(str(s), "ringtone")
+            elif 'notification' in lower_name:
+                push_sound(str(s), "notification_sound")
+            elif 'alarm' in lower_name:
+                push_sound(str(s), "alarm_alert")
+            elif 'low_battery' in lower_name:
+                push_sound(str(s), "low_battery_sound")
+            elif 'charging' in lower_name:
+                push_sound(str(s), "charging_sounds_file")
     elif isinstance(sel_snds, list):
         for s in sel_snds: push_sound(str(s), "notification_sound")
     print(f"\n{Colors.GREEN}{Colors.BOLD}Wizard Complete!{Colors.ENDC}")

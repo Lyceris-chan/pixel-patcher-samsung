@@ -1,7 +1,15 @@
 {
   "generated_on": "2026-05-07",
-  "source": "apps/bridge/app/src/main/AndroidManifest.xml",
-  "packages": {
+  "source": "factory image + bridge manifest audit",
+  "debloatable_apps": {
+    "com.samsung.android.bixby.agent": ["android.permission.RECORD_AUDIO"],
+    "com.samsung.android.svoiceime": ["android.permission.RECORD_AUDIO"]
+  },
+  "cageable_apps": {
+    "com.google.android.apps.maps": ["android.permission.ACCESS_FINE_LOCATION"],
+    "com.google.android.googlequicksearchbox": ["android.permission.RECORD_AUDIO"]
+  },
+  "user_installable_apps": {
     "com.pixelbridge.complications": {
       "runtime_permissions": [
         "android.permission.BODY_SENSORS",
@@ -13,8 +21,7 @@
         "android.permission.health.READ_CALORIES",
         "android.permission.health.READ_SLEEP",
         "android.permission.health.READ_SPO2"
-      ],
-      "notes": "Health Connect permissions still require explicit user approval in-app."
+      ]
     },
     "com.google.android.deskclock": {
       "runtime_permissions": [
@@ -23,8 +30,7 @@
       ],
       "appops": {
         "SCHEDULE_EXACT_ALARM": "allow"
-      },
-      "notes": "DeskClock exact alarm behavior varies by OEM policy."
+      }
     }
   }
 }

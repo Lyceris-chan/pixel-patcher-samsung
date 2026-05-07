@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+*.apk
+*.img
+*.zip
+wf_work/
+log_*.txt
+lawgcat.txt
+apps/bridge/.gradle/
+apps/bridge/build/
+apps/bridge/.kotlin/
+tools/*.exe
+tools/*.jar
+*.idsig
