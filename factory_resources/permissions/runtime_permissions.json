@@ -1,0 +1,30 @@
+{
+  "generated_on": "2026-05-07",
+  "source": "apps/bridge/app/src/main/AndroidManifest.xml",
+  "packages": {
+    "com.pixelbridge.complications": {
+      "runtime_permissions": [
+        "android.permission.BODY_SENSORS",
+        "android.permission.BODY_SENSORS_BACKGROUND",
+        "android.permission.ACTIVITY_RECOGNITION",
+        "android.permission.health.READ_HEART_RATE",
+        "android.permission.health.READ_STEPS",
+        "android.permission.health.READ_DISTANCE",
+        "android.permission.health.READ_CALORIES",
+        "android.permission.health.READ_SLEEP",
+        "android.permission.health.READ_SPO2"
+      ],
+      "notes": "Health Connect permissions still require explicit user approval in-app."
+    },
+    "com.google.android.deskclock": {
+      "runtime_permissions": [
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.SCHEDULE_EXACT_ALARM"
+      ],
+      "appops": {
+        "SCHEDULE_EXACT_ALARM": "allow"
+      },
+      "notes": "DeskClock exact alarm behavior varies by OEM policy."
+    }
+  }
+}
