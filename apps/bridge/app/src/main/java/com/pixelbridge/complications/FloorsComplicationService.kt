@@ -23,7 +23,7 @@ class FloorsComplicationService : SuspendingComplicationDataSourceService() {
         
         val floors = healthDataManager.getLatestData(DataType.FLOORS)
         val textStr = floors.toString()
-        val numValue = textStr.replace(Regex("[^\d.]"), "").toFloatOrNull() ?: 0f
+        val numValue = ComplicationValueSanitizer.parseNumeric(textStr)
         
         val icon = MonochromaticImage.Builder(
             Icon.createWithResource(this, R.drawable.ic_generic_health)
@@ -36,7 +36,7 @@ class FloorsComplicationService : SuspendingComplicationDataSourceService() {
         return when (request.complicationType) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = numValue.coerceIn(0f, 50.0f),
+                    value = ComplicationValueSanitizer.sanitize(numValue, min = 0f, max = 50.0f),
                     min = 0f,
                     max = 50.0f,
                     contentDescription = desc
@@ -69,7 +69,7 @@ class FloorsComplicationService : SuspendingComplicationDataSourceService() {
         return when (type) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = 12.0f.coerceIn(0f, 50.0f),
+                    value = 12.0f,
                     min = 0f,
                     max = 50.0f,
                     contentDescription = desc

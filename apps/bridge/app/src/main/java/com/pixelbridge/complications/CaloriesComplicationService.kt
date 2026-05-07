@@ -23,7 +23,7 @@ class CaloriesComplicationService : SuspendingComplicationDataSourceService() {
         
         val calories = healthDataManager.getLatestData(DataType.CALORIES_TOTAL)
         val textStr = calories.toString()
-        val numValue = textStr.replace(Regex("[^\d.]"), "").toFloatOrNull() ?: 0f
+        val numValue = ComplicationValueSanitizer.parseNumeric(textStr)
         
         val icon = MonochromaticImage.Builder(
             Icon.createWithResource(this, R.drawable.ic_generic_health)
@@ -36,7 +36,7 @@ class CaloriesComplicationService : SuspendingComplicationDataSourceService() {
         return when (request.complicationType) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = numValue.coerceIn(0f, 3000.0f),
+                    value = ComplicationValueSanitizer.sanitize(numValue, min = 0f, max = 3000.0f),
                     min = 0f,
                     max = 3000.0f,
                     contentDescription = desc
@@ -69,7 +69,7 @@ class CaloriesComplicationService : SuspendingComplicationDataSourceService() {
         return when (type) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = 1500.0f.coerceIn(0f, 3000.0f),
+                    value = 1500.0f,
                     min = 0f,
                     max = 3000.0f,
                     contentDescription = desc

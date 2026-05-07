@@ -22,8 +22,8 @@ class RespiratoryRateComplicationService : SuspendingComplicationDataSourceServi
         healthDataManager.registerPassiveListener()
         
         val value = healthDataManager.getLatestDataByName("RESPIRATORY_RATE")
-        val textStr = ue.toString()
-        val numValue = textStr.replace(Regex("[^\d.]"), "").toFloatOrNull() ?: 0f
+        val textStr = value.toString()
+        val numValue = ComplicationValueSanitizer.parseNumeric(textStr)
         
         val icon = MonochromaticImage.Builder(
             Icon.createWithResource(this, R.drawable.ic_generic_health)
@@ -36,7 +36,7 @@ class RespiratoryRateComplicationService : SuspendingComplicationDataSourceServi
         return when (request.complicationType) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = numValue.coerceIn(0f, 40.0f),
+                    value = ComplicationValueSanitizer.sanitize(numValue, min = 0f, max = 40.0f),
                     min = 0f,
                     max = 40.0f,
                     contentDescription = desc
@@ -69,7 +69,7 @@ class RespiratoryRateComplicationService : SuspendingComplicationDataSourceServi
         return when (type) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = 16.0f.coerceIn(0f, 40.0f),
+                    value = 16.0f,
                     min = 0f,
                     max = 40.0f,
                     contentDescription = desc

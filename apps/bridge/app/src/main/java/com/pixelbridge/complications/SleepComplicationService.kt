@@ -23,7 +23,7 @@ class SleepComplicationService : SuspendingComplicationDataSourceService() {
         
         val sleepDuration = healthDataManager.getSleepDurationLast24h()
         val textStr = sleepDuration.toString()
-        val numValue = textStr.replace(Regex("[^\d.]"), "").toFloatOrNull() ?: 0f
+        val numValue = ComplicationValueSanitizer.parseSleepHours(textStr)
         
         val icon = MonochromaticImage.Builder(
             Icon.createWithResource(this, R.drawable.ic_generic_health)
@@ -36,7 +36,7 @@ class SleepComplicationService : SuspendingComplicationDataSourceService() {
         return when (request.complicationType) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = numValue.coerceIn(0f, 12.0f),
+                    value = ComplicationValueSanitizer.sanitize(numValue, min = 0f, max = 12.0f),
                     min = 0f,
                     max = 12.0f,
                     contentDescription = desc
@@ -69,7 +69,7 @@ class SleepComplicationService : SuspendingComplicationDataSourceService() {
         return when (type) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = 7.0f.coerceIn(0f, 12.0f),
+                    value = 7.0f,
                     min = 0f,
                     max = 12.0f,
                     contentDescription = desc

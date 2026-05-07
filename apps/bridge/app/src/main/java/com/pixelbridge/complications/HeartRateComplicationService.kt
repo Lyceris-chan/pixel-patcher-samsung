@@ -23,7 +23,7 @@ class HeartRateComplicationService : SuspendingComplicationDataSourceService() {
         
         val heartRate = healthDataManager.getLatestData(DataType.HEART_RATE_BPM)
         val textStr = heartRate.toString()
-        val numValue = textStr.replace(Regex("[^\d.]"), "").toFloatOrNull() ?: 0f
+        val numValue = ComplicationValueSanitizer.parseNumeric(textStr)
         
         val icon = MonochromaticImage.Builder(
             Icon.createWithResource(this, R.drawable.ic_heart)
@@ -36,7 +36,7 @@ class HeartRateComplicationService : SuspendingComplicationDataSourceService() {
         return when (request.complicationType) {
             ComplicationType.GOAL_PROGRESS -> {
                 GoalProgressComplicationData.Builder(
-                    value = numValue.coerceIn(0f, 220.0f),
+                    value = ComplicationValueSanitizer.sanitize(numValue, min = 0f, max = 220.0f),
                     targetValue = 220.0f,
                     contentDescription = desc
                 )
@@ -47,7 +47,7 @@ class HeartRateComplicationService : SuspendingComplicationDataSourceService() {
             }
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = numValue.coerceIn(0f, 220.0f),
+                    value = ComplicationValueSanitizer.sanitize(numValue, min = 0f, max = 220.0f),
                     min = 0f,
                     max = 220.0f,
                     contentDescription = desc
@@ -80,7 +80,7 @@ class HeartRateComplicationService : SuspendingComplicationDataSourceService() {
         return when (type) {
             ComplicationType.GOAL_PROGRESS -> {
                 GoalProgressComplicationData.Builder(
-                    value = 72.0f.coerceIn(0f, 220.0f),
+                    value = 72.0f,
                     targetValue = 220.0f,
                     contentDescription = desc
                 )
@@ -91,7 +91,7 @@ class HeartRateComplicationService : SuspendingComplicationDataSourceService() {
             }
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = 72.0f.coerceIn(0f, 220.0f),
+                    value = 72.0f,
                     min = 0f,
                     max = 220.0f,
                     contentDescription = desc

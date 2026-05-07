@@ -23,7 +23,7 @@ class DistanceComplicationService : SuspendingComplicationDataSourceService() {
         
         val distance = healthDataManager.getLatestData(DataType.DISTANCE)
         val textStr = distance.toString()
-        val numValue = textStr.replace(Regex("[^\d.]"), "").toFloatOrNull() ?: 0f
+        val numValue = ComplicationValueSanitizer.parseNumeric(textStr)
         
         val icon = MonochromaticImage.Builder(
             Icon.createWithResource(this, R.drawable.ic_generic_health)
@@ -36,7 +36,7 @@ class DistanceComplicationService : SuspendingComplicationDataSourceService() {
         return when (request.complicationType) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = numValue.coerceIn(0f, 10.0f),
+                    value = ComplicationValueSanitizer.sanitize(numValue, min = 0f, max = 10.0f),
                     min = 0f,
                     max = 10.0f,
                     contentDescription = desc
@@ -69,7 +69,7 @@ class DistanceComplicationService : SuspendingComplicationDataSourceService() {
         return when (type) {
             ComplicationType.RANGED_VALUE -> {
                 RangedValueComplicationData.Builder(
-                    value = 3.2f.coerceIn(0f, 10.0f),
+                    value = 3.2f,
                     min = 0f,
                     max = 10.0f,
                     contentDescription = desc
